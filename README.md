@@ -5,7 +5,7 @@ This module will create a certificate using AWS ACM along with all route53 valid
 Example Usage:
 ```hcl
     module "crt" {
-      source = "../../modules/aws-certificate-route53"
+      source = "truemark/certificate-route53/aws"
       domain_names = [
         {
           record_name = "*"
