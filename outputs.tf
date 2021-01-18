@@ -11,11 +11,11 @@ output "certificate_domain" {
 }
 
 output "zone_id" {
-  value = data.aws_route53_zone.validation.zone_id
+  value = element(data.aws_route53_zone.validation.*.zone_id, 1)
 }
 
 output "zone_name" {
-  value = data.aws_route53_zone.validation.name
+  value = element(data.aws_route53_zone.validation.*.name, 1)
 }
 
 output "certificate_validation_id" {
