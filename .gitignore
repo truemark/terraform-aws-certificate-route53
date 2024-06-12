@@ -9,6 +9,7 @@ notes.txt
 *.tfstate
 *.tfstate.backup
 .terraform
+.terraform.lock.hcl
 terraform.tfstate.d
 
 # Byte-compiled / optimized / DLL files
