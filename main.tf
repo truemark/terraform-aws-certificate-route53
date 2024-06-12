@@ -1,7 +1,7 @@
 locals {
   fqdns = [
-    for d in var.domain_names:
-      format("%s%s%s", d.record_name, d.record_name == "" ? "" : ".", d.zone_name)
+    for d in var.domain_names :
+    format("%s%s%s", d.record_name, d.record_name == "" ? "" : ".", d.zone_name)
   ]
 }
 
@@ -17,21 +17,21 @@ resource "aws_acm_certificate" "crt" {
 }
 
 data "aws_route53_zone" "validation" {
-  count = length(var.domain_names)
-  name = var.domain_names[count.index].zone_name
+  count        = length(var.domain_names)
+  name         = var.domain_names[count.index].zone_name
   private_zone = false
 }
 
 locals {
   zone_map = {
-    for index, z in data.aws_route53_zone.validation:
-      (element(local.fqdns, index)) => z.zone_id
-    }
+    for index, z in data.aws_route53_zone.validation :
+    (element(local.fqdns, index)) => z.zone_id
+  }
 }
 
 resource "aws_route53_record" "validation" {
   for_each = {
-    for dvo in aws_acm_certificate.crt.domain_validation_options: dvo.domain_name => {
+    for dvo in aws_acm_certificate.crt.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
       record = dvo.resource_record_value
       type   = dvo.resource_record_type
